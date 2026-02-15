@@ -9,33 +9,52 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class MethodsOrderingAScooter extends ElementsOrder {
+public class MethodsOrderingAScooter {
+
+    //Локаторы для заполнения в форме "Для кого самокат"
+
+    public By name = By.cssSelector("[placeholder='* Имя']"); //Поле Имя
+    public By lastName = By.cssSelector("[placeholder='* Фамилия']"); //Поле Фамилия
+    public By address = By.cssSelector("[placeholder='* Адрес: куда привезти заказ']"); //Поле Адрес
+    public By metroStation = By.cssSelector("[placeholder='* Станция метро']"); //Поле Станция метро
+    public By phoneNumber = By.cssSelector("[placeholder='* Телефон: на него позвонит курьер']"); //Поле Номер телефона
+
+    //Список станций. Динамический элемент, появляется только после клика по полю "Станция метро"
+    public By stations = By.className("select-search__select");
+
+    //Болванка для использования переменной "Станция метро" в методе заполняющий станцию (объяснял чат GPT, потому что в теории этого нет)
+    public String station = "//button[.//div[text()='%s']]";
+
+    //Кнопка "Далее"
+    public By next = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
+
+
+    //Локаторы для заполнени в формы "Про аренду"
+
+    public By date = By.cssSelector("[placeholder='* Когда привезти самокат']");//Поле выбора даты
+    public By rentalPeriods = By.className("Dropdown-placeholder");//Поле срока аренды
+    public By listRentalPeriods = By.className("Dropdown-menu");//Список вариантов срока аренды
+    public String period = "//div[text()='%s']";//Болванка для локатора срока аренды
+
+    public String colorButton = "//label[text()='%s']";//Болванка для локатора цвета
+
+    public By comment = By.cssSelector("[placeholder='Комментарий для курьера']");//Комментарий курьеру
+
+    public By orderButton = By.xpath("//div[contains(@class,'Order_Buttons')]//button[text()='Заказать']");//Кнопка Заказать
+
+    public By YesButton = By.xpath("//button[contains(@class,'Button_Middle') and text()='Да']");//Кнопка Да в окне подтверждения
+
+    public By orderHasBeenPlaced = By.xpath("//div[@class = 'Order_ModalHeader__3FDaJ' and text() = 'Заказ оформлен']");//Заголовок окна подтверждающего оформление заказа
+
+    public By orderHeader = By.xpath(".//div[@class = 'Order_Header__BZXOb' and text() = 'Про аренду']");//Заголовок формы для клика, чтобы сбросить календарь
 
     protected WebDriver driver;
 
     public MethodsOrderingAScooter(WebDriver driver) {
         this.driver = driver;
     }
-    ElementsMain orders = new ElementsMain();
 
-    //1. ПЕРЕХОД НА СТРАНИЦУ ФОРМИРОВАНИЯ ЗАКАЗА
 
-    //Метод нажимающий кнопку заказать 1
-    public void clickOrder1(){
-            new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.elementToBeClickable(orders.order2));
-            driver.findElement(orders.order1).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.numberOfElementsToBe(name, 1));
-    }
-    //Метод нажимающий кнопку заказать 2
-    public void clickOrder2(){
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(orders.order2));
-        WebElement element = driver.findElement(orders.order2);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(orders.order2).click();
-    }
 
     //2. ЗАПОЛНЕНИЕ ФОРМЫ "ДЛЯ КОГО САМОКАТ"
 
@@ -57,11 +76,11 @@ public class MethodsOrderingAScooter extends ElementsOrder {
         driver.findElement(lastName).sendKeys(myLastName);
         driver.findElement(address).sendKeys(myAddress);
         driver.findElement(phoneNumber).sendKeys(myPhoneNumber);
-        //driver.findElement(metroStation).sendKeys(stationName);
         selectStation(stationName);//Заполняем станцию
     }
     //Метод, нажимающий кнопку "Далее" в форме "Для кого самокат"
     public void clickNext(){
+
         driver.findElement(next).click();
     }
 

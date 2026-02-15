@@ -51,6 +51,7 @@ public class TestsYandexSamokat {
     MainPage mainPage;
     OrderPage orderPage;
 
+    public int number;
     @Before
     public void startUp(){
         String browser = System.getProperty("browser", "firefox");
@@ -75,18 +76,6 @@ public class TestsYandexSamokat {
         driver.quit();
     }
 
-    @Test
-    public void testImportantQuestions() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        // Открой страницу тестового стенда
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        MethodsImportantQuestions testTheList = new MethodsImportantQuestions(driver);
-
-        testTheList.checkTheList();
-    }
 
     @Test
     public void testOrderingAScooter1() {
@@ -94,9 +83,9 @@ public class TestsYandexSamokat {
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         // Открой страницу тестового стенда
         driver.get("https://qa-scooter.praktikum-services.ru/");
-        MethodsOrderingAScooter testTheList = new MethodsOrderingAScooter(driver);
+        MethodsImportantQuestions testTheList = new MethodsImportantQuestions(driver, number);
         //Тут вызов метода
-        testTheList.clickOrder1();//Переход по верхней кнопке "Заказать"
+        testTheList.clickOrderInHeader();//Переход по верхней кнопке "Заказать"
 
     }
 
@@ -106,8 +95,9 @@ public class TestsYandexSamokat {
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         // Открой страницу тестового стенда
         driver.get("https://qa-scooter.praktikum-services.ru/");
+        MethodsImportantQuestions testTransition = new MethodsImportantQuestions(driver, number);
         MethodsOrderingAScooter testTheList = new MethodsOrderingAScooter(driver);
-        testTheList.clickOrder2();//Переход по кнопке "Заказать" в центре страницы
+        testTransition.clickOrder();//Переход по кнопке "Заказать" в центре страницы
         testTheList.orderFormation(stationName, myDate, myPeriod, myColor, myComment, myName, myLastName, myAddress, myPhoneNumber);
     }
 
