@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.MethodsImportantQuestions;
 import org.example.pageobjects.MethodsOrderingAScooter;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -78,19 +79,19 @@ public class TestsYandexSamokat {
 
 
     @Test
-    public void testOrderingAScooter1() {
+    public void testTransitionToOrderForm() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         // Открой страницу тестового стенда
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MethodsImportantQuestions testTheList = new MethodsImportantQuestions(driver, number);
-        //Тут вызов метода
+        MethodsOrderingAScooter testTheOrderList = new MethodsOrderingAScooter(driver);
         testTheList.clickOrderInHeader();//Переход по верхней кнопке "Заказать"
-
+        Assert.assertEquals(driver.findElement(testTheOrderList.name).getText(), driver.findElement(testTheOrderList.name).getText());
     }
 
     @Test
-    public void testOrderingAScooter2() {
+    public void testOrderingAScooter() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         // Открой страницу тестового стенда

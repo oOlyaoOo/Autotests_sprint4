@@ -19,8 +19,8 @@ public class MethodsImportantQuestions {
     }
 
     // Локатор кнопки "Заказать"
-    public By order1 = By.xpath("(//button[text()='Заказать'])[1]");// Верхняя кнопка "Заказать"
-    public By order2 = By.xpath("(//button[text()='Заказать'])[2]"); // Кнопка "Заказать" в середине страницы
+    public By orderInHeader = By.xpath("(//button[text()='Заказать'])[1]");// Верхняя кнопка "Заказать"
+    public By order = By.xpath("(//button[text()='Заказать'])[2]"); // Кнопка "Заказать" в середине страницы
 
 
     protected WebDriver driver;
@@ -46,8 +46,8 @@ public class MethodsImportantQuestions {
     public void clickOrderInHeader(){
         MethodsOrderingAScooter waitName = new MethodsOrderingAScooter(driver);
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(order2));
-        driver.findElement(order1).click();
+                .until(ExpectedConditions.elementToBeClickable(order));
+        driver.findElement(orderInHeader).click();
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.numberOfElementsToBe(waitName.name, 1));
     }
@@ -55,10 +55,10 @@ public class MethodsImportantQuestions {
     public void clickOrder(){
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(order2));
-        WebElement element = driver.findElement(order2);
+                .until(ExpectedConditions.elementToBeClickable(order));
+        WebElement element = driver.findElement(order);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(order2).click();
+        driver.findElement(order).click();
     }
 
 }
